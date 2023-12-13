@@ -1,7 +1,23 @@
 import AddonCard from "../components/AddonCard";
 import RecipeCard from "../components/RecipeCard";
+import { useNavigate } from "react-router-dom";
 
 export default function MyMenu() {
+  const navigate = useNavigate();
+  const handleButtonClickMyMenu = () => {
+    console.log(
+      "🚀 ~ file: OrderFlow.jsx:27 ~ handleButtonClickMyMenu ~ consol:"
+    );
+    // Navigate to the "/orderFlow" route
+    navigate("/change-meal");
+  };
+  const handleButtonClickForSelectedMeal = () => {
+    console.log(
+      "🚀 ~ file: OrderFlow.jsx:27 ~ handleButtonClickMyMenu ~ consol:"
+    );
+    // Navigate to the "/orderFlow" route
+    navigate("/selected-meals-cart");
+  };
   return (
     <div className="bg-doodle py-md-5 py-3">
       <div className="container my-md-5 my-3">
@@ -69,7 +85,10 @@ export default function MyMenu() {
                 </p>
               </div>
               <div className="col-md-6 col-12 text-end my-auto">
-                <button className="btn btn-primary aj-button body-text-small fw-700 px-4 me-3">
+                <button
+                  className="btn btn-primary aj-button body-text-small fw-700 px-4 me-3"
+                  onClick={handleButtonClickMyMenu}
+                >
                   <i className="fi fi-sr-restaurant me-2 fs-5 lh-1 align-middle"></i>
                   Change Meals
                 </button>
@@ -97,7 +116,10 @@ export default function MyMenu() {
                 </p>
               </div>
               <div className="col-md-4 col-12 text-end my-auto">
-                <button className="btn btn-primary aj-button body-text-small fw-700 px-4 me-3">
+                <button
+                  className="btn btn-primary aj-button body-text-small fw-700 px-4 me-3"
+                  onClick={handleButtonClickForSelectedMeal}
+                >
                   <i className="fi fi-sr-shopping-cart me-2 fs-5 lh-1 align-middle"></i>
                   Shop for More
                 </button>

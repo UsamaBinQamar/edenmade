@@ -1,6 +1,12 @@
 import RecipeCard from "../components/RecipeCard";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    // Navigate to the "/orderFlow" route
+    navigate("/order-flow");
+  };
   return (
     <>
       <section className="banner-section">
@@ -11,9 +17,12 @@ export default function LandingPage() {
                 Eat healthy, save time, and hone your skills in the kitchen.
               </h1>
               <h2 className="mb-4">Now with more choices every week</h2>
-              <button className="btn btn-primary aj-button body-text-small fw-700 px-4">
+              <button
+                className="btn btn-primary aj-button body-text-small fw-700 px-4"
+                onClick={handleButtonClick}
+              >
                 <i className="fi fi-rr-box-open-full me-2 fs-5 lh-1 align-middle"></i>
-                View our Boxes
+                View our Boxe
               </button>
             </div>
           </div>
@@ -71,7 +80,7 @@ export default function LandingPage() {
             <div className="col-md-4 col-12 text-end">
               <button className="btn btn-primary aj-button body-text-small fw-700 px-4">
                 <i className="fi fi-rr-box-open-full me-2 fs-5 lh-1 align-middle"></i>
-                View our Boxes
+                View our Box
               </button>
             </div>
           </div>
@@ -97,7 +106,7 @@ export default function LandingPage() {
               </h2>
               <button className="btn btn-primary aj-button body-text-small fw-700 px-4">
                 <i className="fi fi-rr-box-open-full me-2 fs-5 lh-1 align-middle"></i>
-                View our Boxes
+                View our Boxe
               </button>
             </div>
           </div>

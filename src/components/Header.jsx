@@ -49,7 +49,10 @@ export default function Header() {
                 {/* <button className="btn btn-primary">Login</button> */}
 
                 {/* For Registered User */}
-                <button className="btn btn-primary mx-3">My Menu</button>
+                <a href="http://localhost:5173/change-meal">
+                  <button className="btn btn-primary mx-3">My Menu</button>
+                </a>
+
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item dropdown text-primary d-flex align-items-center">
                     <i className="fi fi-sr-user"></i>

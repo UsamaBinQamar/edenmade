@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProductSummary from "../components/ProductSummary";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderFlow() {
   const [selectPlanFlow, setselectPlanFlow] = useState(true);
@@ -21,7 +22,14 @@ export default function OrderFlow() {
     setDetailFlow(false);
     setCheckoutFlow(true);
   };
-
+  const navigate = useNavigate();
+  const handleButtonClickMyMenu = () => {
+    console.log(
+      "🚀 ~ file: OrderFlow.jsx:27 ~ handleButtonClickMyMenu ~ consol:"
+    );
+    // Navigate to the "/orderFlow" route
+    navigate("/my-menu");
+  };
   return (
     <div className="container my-5">
       <div className="row">
@@ -568,34 +576,37 @@ export default function OrderFlow() {
                       <input
                         type="text"
                         id="creditCardNumber"
-                        name="cardNumber"
+                        // name="cardNumber"
                         placeholder="Credit Card Number*"
                         className="form-control mb-3"
-                        required
+                        // required
                       />
                     </div>
                     <div className="col-md-6 col-12">
                       <input
                         type="text"
                         id="expiryDate"
-                        name="expiryDate"
+                        // name="expiryDate"
                         placeholder="MM/YY*"
                         className="form-control mb-3"
-                        required
+                        // required
                       />
                     </div>
                     <div className="col-md-6 col-12">
                       <input
                         type="text"
                         id="cvcNumber"
-                        name="cvcNumber"
+                        // name="cvcNumber"
                         placeholder="CVC*"
                         className="form-control mb-3"
-                        required
+                        // required
                       />
                     </div>
                     <div className="col-12">
-                      <button className="w-100 btn btn-primary aj-button body-text-small fw-700">
+                      <button
+                        className="w-100 btn btn-primary aj-button body-text-small fw-700"
+                        onClick={handleButtonClickMyMenu}
+                      >
                         Continue
                       </button>
                     </div>
