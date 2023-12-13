@@ -17,8 +17,27 @@ export default function OrderFlow() {
     setRegisterFlow(false);
     setDetailFlow(true);
   };
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    address: "",
+    city: "",
+    zip: "",
+  });
+  const handleInputChange = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const goToStep4 = () => {
+    // const formData = new FormData(document.forms["detailForm"]);
+
+    // Log the form data
+    console.log("Form Data:", formData);
+
     setDetailFlow(false);
     setCheckoutFlow(true);
   };
@@ -497,6 +516,9 @@ export default function OrderFlow() {
                         placeholder="First Name*"
                         className="form-control mb-3"
                         required
+                        onChange={(e) =>
+                          handleInputChange("firstName", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12">
@@ -507,6 +529,9 @@ export default function OrderFlow() {
                         placeholder="Last Name*"
                         className="form-control mb-3"
                         required
+                        onChange={(e) =>
+                          handleInputChange("lastName", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12">
@@ -516,6 +541,9 @@ export default function OrderFlow() {
                         name="phone"
                         placeholder="Phone Number"
                         className="form-control mb-3"
+                        onChange={(e) =>
+                          handleInputChange("phone", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12">
@@ -525,6 +553,9 @@ export default function OrderFlow() {
                         name="address"
                         placeholder="Address"
                         className="form-control mb-3"
+                        onChange={(e) =>
+                          handleInputChange("address", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12">
@@ -534,6 +565,9 @@ export default function OrderFlow() {
                         name="city"
                         placeholder="City"
                         className="form-control mb-3"
+                        onChange={(e) =>
+                          handleInputChange("city", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12">
@@ -543,6 +577,9 @@ export default function OrderFlow() {
                         name="zip"
                         placeholder="Postal Code"
                         className="form-control mb-3"
+                        onChange={(e) =>
+                          handleInputChange("zip", e.target.value)
+                        }
                       />
                     </div>
                     <div className="col-md-6 col-12 mx-auto mt-3">
