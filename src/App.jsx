@@ -1,50 +1,14 @@
-// import "./App.css";
+// App.js
 
-// import Header from "./components/Header";
-// import Footer from "./components/Footer";
-// import ChangeMeal from "./pages/ChangeMeal";
-// import EditDeliveryPopup from "./components/popups/EditDeliveryPopup";
-// import Cart from "./pages/Cart";
-// import MyMenu from "./pages/MyMenu";
-// import ChangeBoxSizePopup from "./components/popups/ChangeBoxSizePopup";
-// import PlanSettingPopup from "./components/popups/PlanSettingPopup";
-// import CancelSubscriptionPopup from "./components/popups/CancelSubscriptionPopup";
-// import OrderFlow from "./pages/OrderFlow";
-// import LandingPage from "./pages/LandingPage";
-
-// function App() {
-//   return (
-//     <>
-//       {/* <Header /> */}
-//       <LandingPage />
-//       {/* <Footer /> */}
-//       {/* <OrderFlow />
-// <MyMenu />
-// <Cart />
-// <ChangeMeal />
-//       <Footer />
-//       <EditDeliveryPopup />
-//       <ChangeBoxSizePopup />
-//       <PlanSettingPopup />
-//       <CancelSubscriptionPopup /> */}
-//     </>
-//   );
-// }
-
-// export default App;
-import "./App.css";
 import React from "react";
-import LandingPage from "./pages/LandingPage";
-import OrderFlow from "./pages/OrderFlow";
-import MyMenu from "./pages/MyMenu";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
 import Cart from "./pages/Cart";
 import ChangeMeal from "./pages/ChangeMeal";
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import MyMenu from "./pages/MyMenu";
+import OrderFlow from "./pages/OrderFlow";
+import { AuthProvider } from "./auth/authContext";
 
 const router = createBrowserRouter([
   {
@@ -71,7 +35,6 @@ const router = createBrowserRouter([
         path: "change-meal",
         element: <ChangeMeal />,
       },
-
       Cart,
     ],
   },
@@ -80,7 +43,9 @@ const router = createBrowserRouter([
 function App({ routes }) {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }

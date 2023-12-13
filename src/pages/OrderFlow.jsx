@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProductSummary from "../components/ProductSummary";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/authContext";
 
 export default function OrderFlow() {
   const [selectPlanFlow, setselectPlanFlow] = useState(true);
@@ -49,6 +50,8 @@ export default function OrderFlow() {
     // Navigate to the "/orderFlow" route
     navigate("/my-menu");
   };
+
+  const { userSignInWithGoogle } = useAuth();
   return (
     <div className="container my-5">
       <div className="row">
@@ -437,7 +440,10 @@ export default function OrderFlow() {
                 <div className="col-12 px-md-5 px-3 py-3">
                   <div className="row">
                     <div className="col-12 col-md-4 mb-2">
-                      <button className="w-100 btn btn-primary aj-button google-button fw-700 px-2 lh-1">
+                      <button
+                        className="w-100 btn btn-primary aj-button google-button fw-700 px-2 lh-1"
+                        onClick={userSignInWithGoogle}
+                      >
                         <i className="fi fi-brands-google fs-6 me-2 align-middle lh-1"></i>
                         Continue with Google
                       </button>
