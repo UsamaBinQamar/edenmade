@@ -51,7 +51,8 @@ export default function OrderFlow() {
     navigate("/my-menu");
   };
 
-  const { userSignInWithGoogle } = useAuth();
+  const { userSignInWithGoogle, authUser } = useAuth();
+  console.log("🚀 ~ file: OrderFlow.jsx:55 ~ OrderFlow ~ authUser:", authUser);
   return (
     <div className="container my-5">
       <div className="row">

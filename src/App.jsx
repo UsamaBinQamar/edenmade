@@ -1,6 +1,6 @@
 // App.js
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import Cart from "./pages/Cart";
@@ -8,7 +8,9 @@ import ChangeMeal from "./pages/ChangeMeal";
 import LandingPage from "./pages/LandingPage";
 import MyMenu from "./pages/MyMenu";
 import OrderFlow from "./pages/OrderFlow";
-import { AuthProvider } from "./auth/authContext";
+import { AuthProvider, useAuth } from "./auth/authContext";
+import { useNavigate } from "react-router-dom";
+import SecurePage from "./auth/Secure";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <LandingPage />,
+        element: <SecurePage Comment={LandingPage} />,
       },
       {
         path: "order-flow",

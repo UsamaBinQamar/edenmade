@@ -63,19 +63,19 @@ export const useProvideAuth = () => {
         setLoading(false);
       });
   };
-  const userSignOut = () => {
-    setLoading(true);
-    signOut(auth)
-      .then(() => {
-        setAuthUser(undefined);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  // const userSignOut = () => {
+  //   setLoading(true);
+  //   signOut(auth)
+  //     .then(() => {
+  //       setAuthUser(undefined);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // };
 
   const resetPassword = async (email) => {
     setLoading(true);
@@ -91,24 +91,7 @@ export const useProvideAuth = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setLoading(true);
       if (user) {
-        const val = await user.getIdTokenResult();
-        // if (val?.claims["type"] !== "payer") {
-        signOut(auth)
-          .then(() => {
-            setAuthUser(undefined);
-          })
-          .catch((error) => {
-            setError(error.message);
-          })
-          .finally(() => {
-            setLoading(false);
-            setLoadingAuthUser(false);
-          });
-        // } else {
         setAuthUser(user);
-        const userToken = await user.getIdToken();
-        setLoadingAuthUser(false);
-        // }
       } else {
         setAuthUser(undefined);
         setLoadingAuthUser(false);
@@ -126,7 +109,6 @@ export const useProvideAuth = () => {
     resetPassword,
     setAuthUser,
     userLogin,
-    userSignOut,
     tokenId,
     error,
     userSignUp,
