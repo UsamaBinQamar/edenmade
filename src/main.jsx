@@ -6,9 +6,11 @@ import Header from "./components/Header";
 import { AuthProvider } from "./auth/authContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {" "}
-    <Header />
-    <App />
-    <Footer />
+    <AuthProvider>
+      {" "}
+      <Header />
+      <App />
+      <Footer />
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -1,20 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
 import { useAuth } from "./authContext";
 import { useNavigate } from "react-router-dom";
 
 const SecurePage = (props) => {
-  const { Comment } = props;
-  // const navigate = useNavigate();
-  // const { loadingAuthUser, authUser } = useAuth();
-  // useEffect(() => {
-  //   if (!loadingAuthUser && !authUser) {
-  //     navigate("/change-meal");
-  //   }
-  // }, [authUser, loadingAuthUser]);
+  const { Comment, data } = props;
+  const navigate = useNavigate();
+  const { loadingAuthUser, authUser } = useAuth();
+  useEffect(() => {
+    if (
+      !loadingAuthUser &&
+      !authUser &&
+      (data !== "landing" || data !== "order")
+    ) {
+      console.log("🚀 ~ file: Secure.jsx:16 ~ useEffect ~ data:", data);
+      navigate("/");
+    }
+  }, [authUser, loadingAuthUser]);
   return (
     <>
-      Usama
       <Comment />
     </>
   );

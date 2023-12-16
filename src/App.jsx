@@ -19,25 +19,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <SecurePage Comment={LandingPage} />,
+        element: <SecurePage Comment={LandingPage} data={"landing"} />,
       },
       {
         path: "order-flow",
-        element: <OrderFlow />,
+        element: <SecurePage Comment={OrderFlow} data={"order"} />,
       },
       {
         path: "my-menu",
-        element: <MyMenu />,
+        element: <SecurePage Comment={MyMenu} />,
       },
       {
         path: "selected-meals-cart",
-        element: <Cart />,
+        element: <SecurePage Comment={Cart} />,
       },
       {
         path: "change-meal",
-        element: <ChangeMeal />,
+        element: <SecurePage Comment={ChangeMeal} />,
       },
-      Cart,
+      // Cart,
     ],
   },
 ]);

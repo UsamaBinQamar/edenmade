@@ -4,6 +4,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  FacebookAuthProvider,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 import auth from "./config";
@@ -15,6 +16,19 @@ export const useProvideAuth = () => {
   const [error, setError] = useState("");
 
   const provider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
+  const userSignInWithFacebook = async () => {
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
+      setAuthUser(result.user);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const userLogin = async (email, password) => {
     setLoading(true);
     email.toLowerCase();
@@ -63,19 +77,19 @@ export const useProvideAuth = () => {
         setLoading(false);
       });
   };
-  // const userSignOut = () => {
-  //   setLoading(true);
-  //   signOut(auth)
-  //     .then(() => {
-  //       setAuthUser(undefined);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const userSignOut = () => {
+    setLoading(true);
+    signOut(auth)
+      .then(() => {
+        setAuthUser(undefined);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const resetPassword = async (email) => {
     setLoading(true);
@@ -114,5 +128,7 @@ export const useProvideAuth = () => {
     userSignUp,
     GoogleAuthProvider,
     userSignInWithGoogle,
+    userSignInWithFacebook,
+    userSignOut,
   };
 };

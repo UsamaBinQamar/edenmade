@@ -1,4 +1,7 @@
+import { useAuth } from "../auth/authContext";
+
 export default function Header() {
+  const { authUser, userSignOut, userSignInWithGoogle } = useAuth();
   return (
     <div className="aj-drop-shadow background-white">
       <div className="container">
@@ -104,11 +107,15 @@ export default function Header() {
                       <li>
                         <hr className="dropdown-divider" />
                       </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Log Out
-                        </a>
-                      </li>
+                      {authUser ? (
+                        <li onClick={userSignOut}>
+                          <a className="dropdown-item">Logout</a>{" "}
+                        </li>
+                      ) : (
+                        <li onClick={userSignInWithGoogle}>
+                          <a className="dropdown-item">Login</a>
+                        </li>
+                      )}
                     </ul>
                   </li>
                 </ul>
