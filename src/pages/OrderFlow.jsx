@@ -30,6 +30,86 @@ export default function OrderFlow() {
     { id: "people4", value: 4, label: "4" },
     // Add more options as needed
   ];
+  const saveOrderDataToDatabase = async () => {
+    try {
+      app.post("/api/saveOrderData", (req, res) => {
+        const { selectedPeople, formData, selectedRecipes } = req.body;
+        console.log(
+          "🚀 ~ file: OrderFlow.jsx:37 ~ app.post ~ selectedRecipes:",
+          selectedRecipes
+        );
+        console.log(
+          "🚀 ~ file: OrderFlow.jsx:37 ~ app.post ~ formData:",
+          formData
+        );
+        console.log(
+          "🚀 ~ file: OrderFlow.jsx:37 ~ app.post ~ selectedPeople:",
+          selectedPeople
+        );
+
+        // Insert data into the orders table
+        const orderQuery =
+          "INSERT INTO orders (selectedPeople, firstName, lastName, phone, address, city, zip) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        const orderValues = [
+          selectedPeople,
+          formData.firstName,
+          formData.lastName,
+          formData.phone,
+          formData.address,
+          formData.city,
+          formData.zip,
+        ];
+
+        connection.query(orderQuery, orderValues, (error, orderResults) => {
+          if (error) {
+            console.error(
+              "Error inserting order data into the database:",
+              error
+            );
+            res
+              .status(500)
+              .json({ success: false, error: "Internal Server Error" });
+          } else {
+            console.log("Order data inserted successfully:", orderResults);
+
+            // Insert selected recipes into the order_recipes table
+            const orderId = orderResults.insertId;
+            const recipeQuery =
+              "INSERT INTO order_recipes (order_id, recipe_id) VALUES (?, ?)";
+            const recipeValues = selectedRecipes.map((recipeId) => [
+              orderId,
+              recipeId,
+            ]);
+
+            connection.query(recipeQuery, [recipeValues], (recipeError) => {
+              if (recipeError) {
+                console.error(
+                  "Error inserting recipe data into the database:",
+                  recipeError
+                );
+                res
+                  .status(500)
+                  .json({ success: false, error: "Internal Server Error" });
+              } else {
+                console.log("Recipe data inserted successfully.");
+                res.status(200).json({ success: true });
+              }
+            });
+          }
+        });
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Data saved to the database successfully!");
+      } else {
+        console.error("Failed to save data to the database:", data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const [selectedPeople, setSelectedPeople] = useState("");
 
@@ -87,7 +167,14 @@ export default function OrderFlow() {
     // const formData = new FormData(document.forms["detailForm"]);
 
     // Log the form data
-    console.log("Form Data:", formData);
+    saveOrderDataToDatabase();
+    console.log(
+      "Form Data:",
+      formData,
+      "selectedPeople",
+      selectedPeople,
+      selectedRecipes
+    );
 
     setDetailFlow(false);
     setCheckoutFlow(true);
@@ -101,7 +188,7 @@ export default function OrderFlow() {
     navigate("/my-menu");
   };
 
-  const { userSignInWithGoogle, authUser } = useAuth();
+  const { userSignInWithGoogle, authUser, userSignInWithFacebook } = useAuth();
   console.log("🚀 ~ file: OrderFlow.jsx:55 ~ OrderFlow ~ authUser:", authUser);
   return (
     <div className="container my-5">
@@ -354,53 +441,6 @@ export default function OrderFlow() {
                     </div>
                   </div>
 
-                  {/* <div className="plan-size plan-size-people d-flex align-items-center justify-content-between my-3">
-                    <p className="mb-0">Number of People</p>
-                    <div className="d-flex">
-                      <div>
-                        <input
-                          type="radio"
-                          id="planPeople1"
-                          name="planPeople"
-                          value="2"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="planPeople1"
-                        >
-                          2
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          type="radio"
-                          id="planPeople2"
-                          name="planPeople"
-                          value="3"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="planPeople2"
-                        >
-                          3
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          type="radio"
-                          id="planPeople3"
-                          name="planPeople"
-                          value="4"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="planPeople3"
-                        >
-                          4
-                        </label>
-                      </div>
-                    </div>
-                  </div> */}
                   <div className="plan-size plan-size-recipe d-flex align-items-center justify-content-between my-3">
                     <p className="mb-0">Recipe per Week</p>
                     <div className="d-flex">
@@ -426,67 +466,6 @@ export default function OrderFlow() {
                       ))}
                     </div>
                   </div>
-                  {/* <div className="plan-size plan-size-recipe d-flex align-items-center justify-content-between my-3">
-                    <p className="mb-0">Recipe per Week</p>
-                    <div className="d-flex">
-                      <div>
-                        <input
-                          type="radio"
-                          id="recipePerWeek1"
-                          name="recipePerWeek"
-                          value="2"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="recipePerWeek1"
-                        >
-                          2
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          type="radio"
-                          id="recipePerWeek2"
-                          name="recipePerWeek"
-                          value="3"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="recipePerWeek2"
-                        >
-                          3
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          type="radio"
-                          id="recipePerWeek3"
-                          name="recipePerWeek"
-                          value="4"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="recipePerWeek3"
-                        >
-                          4
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          type="radio"
-                          id="recipePerWeek4"
-                          name="recipePerWeek"
-                          value="5"
-                        />
-                        <label
-                          className="plan-size-label btn btn-primary w-auto px-4"
-                          htmlFor="recipePerWeek4"
-                        >
-                          5
-                        </label>
-                      </div>
-                    </div>
-                  </div> */}
                   <ProductSummary />
                 </div>
               </div>
@@ -582,7 +561,10 @@ export default function OrderFlow() {
                       </button>
                     </div>
                     <div className="col-12 col-md-4 mb-2">
-                      <button className="w-100 btn btn-primary aj-button facebook-button fw-700 px-2 lh-1">
+                      <button
+                        className="w-100 btn btn-primary aj-button facebook-button fw-700 px-2 lh-1"
+                        onClick={userSignInWithFacebook}
+                      >
                         <i className="fi fi-brands-facebook fs-6 me-2 align-middle lh-1"></i>
                         Continue with Facebook
                       </button>
