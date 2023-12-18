@@ -130,5 +130,6 @@ export const useProvideAuth = () => {
     userSignInWithGoogle,
     userSignInWithFacebook,
     userSignOut,
+    signInWithEmailAndPassword,
   };
 };

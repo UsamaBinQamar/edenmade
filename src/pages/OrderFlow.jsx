@@ -9,6 +9,9 @@ export default function OrderFlow() {
   const [detailFlow, setDetailFlow] = useState(false);
   const [checkoutFlow, setCheckoutFlow] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const goToStep2 = () => {
     setselectPlanFlow(false);
     setRegisterFlow(true);
@@ -129,6 +132,7 @@ export default function OrderFlow() {
     }
   };
   const goToStep3 = () => {
+    signInWithEmailAndPassword(email, password);
     setRegisterFlow(false);
     setDetailFlow(true);
   };
@@ -188,7 +192,12 @@ export default function OrderFlow() {
     navigate("/my-menu");
   };
 
-  const { userSignInWithGoogle, authUser, userSignInWithFacebook } = useAuth();
+  const {
+    userSignInWithGoogle,
+    authUser,
+    userSignInWithFacebook,
+    signInWithEmailAndPassword,
+  } = useAuth();
   console.log("🚀 ~ file: OrderFlow.jsx:55 ~ OrderFlow ~ authUser:", authUser);
   return (
     <div className="container my-5">
@@ -498,38 +507,31 @@ export default function OrderFlow() {
                   <div className="text-end d-none d-md-block">
                     <img src="/meals-image.png" />
                   </div>
-                </div>
+                </div>{" "}
                 <div className="col-md-6 col-12 px-md-5 px-3 pt-3 pb-0">
                   <form>
                     <input
+                      required
                       type="email"
                       id="regEmail"
                       name="email"
                       placeholder="Your Email Address"
                       className="form-control mb-3"
-                      required
+                      value={email} // Bind the value to the state
+                      onChange={(e) => setEmail(e.target.value)} // Handle input changes
                     />
                     <input
+                      required
                       type="password"
                       id="regPass"
                       name="password"
                       placeholder="Password"
                       className="form-control mb-3"
-                      required
+                      value={password} // Bind the value to the state
+                      onChange={(e) => setPassword(e.target.value)} // Handle input changes
                     />
                     <div className="form-check mb-3">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="acceptanceCheckbox"
-                      />
-                      <label
-                        className="form-check-label body-text-extra-small fw-medium"
-                        htmlFor="acceptanceCheckbox"
-                      >
-                        Yes, I&apos;d like to receive direct marketing. See our{" "}
-                        <a href="#">Privacy Policy</a> for further details.
-                      </label>
+                      {/* Other form elements... */}
                     </div>
 
                     <button
@@ -571,7 +573,6 @@ export default function OrderFlow() {
                     </div>
                   </div>
                 </div>
-
                 <div className="col-12 px-3 py-3">
                   <div className="row">
                     <div className="col-12 col-md-4 text-center px-3 mt-3">
