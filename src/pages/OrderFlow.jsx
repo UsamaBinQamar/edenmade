@@ -13,7 +13,41 @@ export default function OrderFlow() {
     setselectPlanFlow(false);
     setRegisterFlow(true);
   };
+  const recipeOptions = [
+    { id: "recipe1", name: "Chinese", value: "Chinese" },
+    { id: "recipe2", name: "Thai", value: "Thai" },
+    { id: "recipe3", name: "Mexican", value: "Mexican" },
+    { id: "recipe4", name: "Italian", value: "Italian" },
+    { id: "recipe5", name: "Chinese", value: "Chinese" },
+    { id: "recipe6", name: "Arabian", value: "Arabian" },
+    { id: "recipe7", name: "Regional", value: "Regional" },
+    { id: "recipe8", name: "Seasonal", value: "Seasonal" },
+    { id: "recipe9", name: "B.B.Q", value: "BBQ" },
+  ];
+  const peopleOptions = [
+    { id: "people2", value: 2, label: "2" },
+    { id: "people3", value: 3, label: "3" },
+    { id: "people4", value: 4, label: "4" },
+    // Add more options as needed
+  ];
 
+  const [selectedPeople, setSelectedPeople] = useState("");
+
+  const handlePeopleChange = (value) => {
+    setSelectedPeople(value);
+  };
+
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+
+  const handleCheckboxChange = (value) => {
+    const isSelected = selectedRecipes.includes(value);
+
+    if (isSelected) {
+      setSelectedRecipes(selectedRecipes.filter((recipe) => recipe !== value));
+    } else {
+      setSelectedRecipes([...selectedRecipes, value]);
+    }
+  };
   const goToStep3 = () => {
     setRegisterFlow(false);
     setDetailFlow(true);
@@ -31,6 +65,22 @@ export default function OrderFlow() {
       ...prevData,
       [name]: value,
     }));
+  };
+  const recipePerWeekOptions = [
+    { id: "recipePerWeek2", value: 2, label: "2" },
+    { id: "recipePerWeek3", value: 3, label: "3" },
+    { id: "recipePerWeek4", value: 4, label: "4" },
+    { id: "recipePerWeek5", value: 5, label: "5" },
+    // Add more options as needed
+  ];
+
+  // ...
+  // Your existing code
+
+  const [selectedRecipePerWeek, setSelectedRecipePerWeek] = useState("");
+
+  const handleRecipePerWeekChange = (value) => {
+    setSelectedRecipePerWeek(value);
   };
 
   const goToStep4 = () => {
@@ -108,6 +158,33 @@ export default function OrderFlow() {
               <div className="row mt-5">
                 <div className="col-md-6 col-12 px-4 py-3 border-right-divider">
                   <h2 className="text-center mb-2">
+                    1. What kind of recipes do you like?
+                  </h2>
+                  <p className="body-text-extra-small text-center">
+                    Please select from the options below. You can always change
+                    them later.
+                  </p>
+                  <form id="recipeSelection" className="aj-grid-container my-3">
+                    {recipeOptions.map((recipe) => (
+                      <div key={recipe.id} className="aj-grid-item">
+                        <input
+                          type="checkbox"
+                          id={recipe.id}
+                          name={recipe.name}
+                          value={recipe.value}
+                          checked={selectedRecipes.includes(recipe.value)}
+                          onChange={() => handleCheckboxChange(recipe.value)}
+                        />
+                        <label
+                          className="recipe-name btn btn-primary"
+                          htmlFor={recipe.id}
+                        >
+                          {recipe.name}
+                        </label>
+                      </div>
+                    ))}
+                  </form>
+                  {/* <h2 className="text-center mb-2">
                     1. What kind of recipes do you like?
                   </h2>
                   <p className="body-text-extra-small text-center">
@@ -241,7 +318,7 @@ export default function OrderFlow() {
                         B.B.Q
                       </label>
                     </div>
-                  </form>
+                  </form> */}
                   <p className="body-text-extra-small text-center">
                     Win over taste buds of all ages with easy, delicious and
                     crowd-pleasing meals.
@@ -254,6 +331,30 @@ export default function OrderFlow() {
                     customizeit from week to week.
                   </p>
                   <div className="plan-size plan-size-people d-flex align-items-center justify-content-between my-3">
+                    <p className="mb-0">Number of People</p>
+                    <div className="d-flex">
+                      {peopleOptions.map((option) => (
+                        <div key={option.id}>
+                          <input
+                            type="radio"
+                            id={option.id}
+                            name="planPeople"
+                            value={option.value}
+                            checked={selectedPeople === option.value}
+                            onChange={() => handlePeopleChange(option.value)}
+                          />
+                          <label
+                            className="plan-size-label btn btn-primary w-auto px-4"
+                            htmlFor={option.id}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* <div className="plan-size plan-size-people d-flex align-items-center justify-content-between my-3">
                     <p className="mb-0">Number of People</p>
                     <div className="d-flex">
                       <div>
@@ -299,8 +400,33 @@ export default function OrderFlow() {
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="plan-size plan-size-recipe d-flex align-items-center justify-content-between my-3">
+                    <p className="mb-0">Recipe per Week</p>
+                    <div className="d-flex">
+                      {recipePerWeekOptions.map((option) => (
+                        <div key={option.id}>
+                          <input
+                            type="radio"
+                            id={option.id}
+                            name="recipePerWeek"
+                            value={option.value}
+                            checked={selectedRecipePerWeek === option.value}
+                            onChange={() =>
+                              handleRecipePerWeekChange(option.value)
+                            }
+                          />
+                          <label
+                            className="plan-size-label btn btn-primary w-auto px-4"
+                            htmlFor={option.id}
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* <div className="plan-size plan-size-recipe d-flex align-items-center justify-content-between my-3">
                     <p className="mb-0">Recipe per Week</p>
                     <div className="d-flex">
                       <div>
@@ -360,7 +486,7 @@ export default function OrderFlow() {
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <ProductSummary />
                 </div>
               </div>
